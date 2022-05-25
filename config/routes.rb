@@ -1,9 +1,16 @@
 Rails.application.routes.draw do
 
-  # Routing logic: fallback requests for React Router.
-  # Leave this here to help deploy your app later!
-  resources :users, only: [:index, :show, :create, :destroy, :update]
+
+  # resources :users, only: [:index, :show, :create, :destroy, :update]
   resources :phones, only: [:index, :show]
+
+  namespace :api do
+    namespace :v1 do
+      resources :users, only: [:create]
+      post '/login', to: 'auth#create'
+      get '/profile', to: 'users#profile'
+    end
+  end
   # get "/teams", to: "teams#index"
   # post "/login", to: "sessions#login"
   # post "/signup", to: "users#create"
