@@ -9,7 +9,27 @@ class PhonesController < ApplicationController
         render json: phone, status: :ok
     end
 
+
+    def create
+        phone = Phone.create(phone_params)
+        render json: phone, status: :created
+    end
+
+    def update
+        phone = Phone.find(params[:id])
+        phone.update(phone_params)
+        render json: phone, status: :accepted
+    end
+
+    def destroy
+        product = Product.find(params[:id])
+        product.destroy
+    end
     
+    private
+    def phone_params
+      params.require(:phone).permit(:name, :price, :desc, :image)
+    end
     # def destroy
     #     favorite = Favorite.find(params[:id])
     #     favorite.destroy
