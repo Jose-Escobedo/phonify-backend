@@ -3,19 +3,52 @@ class ApplicationController < ActionController::API
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
   
   include ActionController::Cookies
+  before_action :initialize_session
+  before_action :load_cart
 
-  before_action :current_cart
 
-  def current_user
-      User.find_by(id: session[:current_user])
+  # def current_user
+  #     User.find_by(id: session[:current_user])
+  # end
+
+
+  # def authorize_user
+  #     return render json: { error: "Not Authorized" }, status: :unauthorized unless current_user
+  # end
+
+
+  def initialize_session
+    session[:cart] ||= []
   end
 
 
-  def authorize_user
-      return render json: { error: "Not Authorized" }, status: :unauthorized unless current_user
+  def load_cart
+    @cart = Phone.find(session[:cart])
   end
 
 
+  # def current_customer
+  #   if session[:user_id]
+  #     @customer = Customer.find(session[:user_id])
+  #   end
+  # end
+
+  # def current_cart
+  #   if login?
+  #     @cart = @customer.cart
+  #   else
+  #      if session[:cart]
+  #       @cart = Cart.find(session[:cart])
+  #      else
+  #       @cart = Cart.create
+  #       session[:cart] = @cart.id
+  #      end
+  #   end
+  # end
+
+  # def login?
+  #   !!current_customer
+  # end
 
 
 
@@ -30,20 +63,4 @@ class ApplicationController < ActionController::API
       render json: { errors: invalid }, status: :not_found
   end
 
-  
-  def current_cart
-    if session[:cart_id]
-      cart = Cart.find_by(id: session[:cart_id])
-      if cart
-        @current_cart = cart
-      else
-        session[:cart_id] = nil
-      end
-  end
-
-  if session[:cart_id] == nil
-      @current_cart = Cart.create
-      session[:cart_id] = @current_cart.id
-  end
- end
 end

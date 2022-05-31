@@ -9,7 +9,6 @@ class PhonesController < ApplicationController
         render json: phone, status: :ok
     end
 
-
     def create
         phone = Phone.create(phone_params)
         render json: phone, status: :created

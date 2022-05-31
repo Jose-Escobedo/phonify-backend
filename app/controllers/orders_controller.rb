@@ -12,7 +12,7 @@ class OrdersController < ApplicationController
 
     def create
       @order = Order.new(order_params)
-      @current_cart.line_items.each do |item|
+      @current_order.line_items.each do |item|
         @order.line_items << item
         item.cart_id = nil
       end
@@ -37,6 +37,6 @@ class OrdersController < ApplicationController
     private
 
     def order_params
-      params.require(:order).permit(:name, :email, address, :phone_num)
+      params.require(:order).permit(:name, :email, :total, address, :phone_num)
     end
 end

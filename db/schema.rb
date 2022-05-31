@@ -23,7 +23,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_30_065302) do
     t.integer "quantity"
     t.integer "phone_id"
     t.integer "cart_id"
-    t.integer "order_id"
+    t.decimal "subtotal"
+    t.decimal "unit_price"
+    t.decimal "total"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -31,6 +33,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_30_065302) do
   create_table "orders", force: :cascade do |t|
     t.string "name"
     t.string "email"
+    t.decimal "subtotal"
+    t.decimal "total"
     t.text "address"
     t.text "phone_num"
     t.datetime "created_at", null: false

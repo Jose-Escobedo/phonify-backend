@@ -1,7 +1,12 @@
 class SessionsController < ApplicationController
-    # Group Activity => Set 'authorize_user' to Skip Login Action
-
     # before_action :authorize_user, except: [:login]
+    
+
+
+
+ 
+
+
 
     def login
         user = User.find_by(username:params[:username])
