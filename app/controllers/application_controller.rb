@@ -3,9 +3,6 @@ class ApplicationController < ActionController::API
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
   
   include ActionController::Cookies
-  before_action :initialize_session
-  before_action :load_cart
-
 
   # def current_user
   #     User.find_by(id: session[:current_user])
@@ -16,41 +13,27 @@ class ApplicationController < ActionController::API
   #     return render json: { error: "Not Authorized" }, status: :unauthorized unless current_user
   # end
 
+  protected
 
-  def initialize_session
-    session[:cart] ||= []
+  # Ensures that the product_id parameter exists in the request
+  # and that the product_id exists in the Product table
+
+  def validate_phone_id
+    params.require(:phone_id)
+    phone_id = params[:phone_id].to_i # prevents SQL injection
+    unless Phone.exists?(phone_id)
+      raise ArgumentError, 'Product not found. The product might'\
+       ' not exist or has been deleted.'
+    end
   end
 
-
-  def load_cart
-    @cart = Phone.find(session[:cart])
+  # Ensures that the cart_id parameter exists in the request
+  # and that the cart_id exists in the Cart table
+  def validate_cart_id
+    params.require(:cart_id)
+    cart_id = params[:cart_id].to_i # prevents SQL injection
+    raise ArgumentError, 'Cart not found.' unless Cart.exists?(cart_id)
   end
-
-
-  # def current_customer
-  #   if session[:user_id]
-  #     @customer = Customer.find(session[:user_id])
-  #   end
-  # end
-
-  # def current_cart
-  #   if login?
-  #     @cart = @customer.cart
-  #   else
-  #      if session[:cart]
-  #       @cart = Cart.find(session[:cart])
-  #      else
-  #       @cart = Cart.create
-  #       session[:cart] = @cart.id
-  #      end
-  #   end
-  # end
-
-  # def login?
-  #   !!current_customer
-  # end
-
-
 
 
   private
