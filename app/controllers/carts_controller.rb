@@ -1,15 +1,5 @@
 class CartsController < ApplicationController
-  # def add_to_cart
-  #   id = params[:id].to_i
-  #   session[:cart] << id unless session[:cart].include?(id)
-  #   render json: session[:cart], status: :ok
-  # end
 
-  # def remove_from_cart
-  #   id = params[:id].to_i
-  #   session[:cart].delete(id)
-  #   render json: session[:cart], status: :ok
-  # end
 
   def index
     carts = Cart.all
@@ -18,16 +8,10 @@ class CartsController < ApplicationController
 
 
   def show
-    validate_cart_id
-
-    cart = Cart.find(params[:cart_id])
-
-    render json: { status: 'SUCCESS', message: 'Loaded cart content',
-                   cart_content: cart.line_items,
-                   }, status: :ok
+    
   end
 
-  # POST   /api/v1/carts
+
   def create
     cart = Cart.create!
     render json: cart, status: :created
@@ -38,27 +22,7 @@ class CartsController < ApplicationController
     carts.destroy_all
   end
 
-  # POST   /api/v1/carts/checkout
-  # body ex:
-  # {
-  #   "cart_id": 1
-  # }
 
-  # def checkout
-  #   validate_cart_id
-
-  #   cart = Cart.find(params[:cart_id])
-  #   checkout_successful = cart.checkout
-
-  #   unless checkout_successful
-  #     raise ActionController::BadRequest, 'Checkout could not be'\
-  #      ' completed. Some products might be out of stock or the'\
-  #      ' cart is empty.'
-  #   end
-
-  #   render json: { status: 'SUCCESS', message: 'Checkout successful.' },
-  #          status: :ok
-  # end
 
 
 end
