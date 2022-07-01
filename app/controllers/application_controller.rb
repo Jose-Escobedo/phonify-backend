@@ -4,10 +4,10 @@ class ApplicationController < ActionController::API
   
   include ActionController::Cookies
 
+  before_action :authenticate_user!
 
-
+  respond_to :json
   
-
 
   # def current_user
   #     User.find_by(id: session[:current_user])

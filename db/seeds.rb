@@ -1,9 +1,9 @@
 # User Seeds
 
-gavin = User.create(username:"gavin", password:"pickle")
-toby = User.create(username:"toby", password:"apple")
-gabe = User.create(username:"gabe" , password:"sun")
-tony = User.create(username:"tony", password: "moon")
+# gavin = User.create(username:"gavin", password:"pickle")
+# toby = User.create(username:"toby", password:"apple")
+# gabe = User.create(username:"gabe" , password:"sun")
+# tony = User.create(username:"tony", password: "moon")
 
 #Phone Seeds
 
